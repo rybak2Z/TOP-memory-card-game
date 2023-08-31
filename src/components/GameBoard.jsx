@@ -23,17 +23,33 @@ function shuffleArray(array) {
 
 function GameBoard() {
   const [cardDeck, setCardDeck] = useState(allCards);
+  const [clickedCards, setClickedCards] = useState([]);
+  const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
 
-  function handleClick() {
+  function handleClick(label) {
     const deckCopy = [...cardDeck];
     shuffleArray(deckCopy);
     setCardDeck(deckCopy);
+
+    if (clickedCards.includes(label)) {
+      setGameStatus('lost');
+    } else if (clickedCards.length + 1 === allCards.length) {
+      setGameStatus('won');
+    } else {
+      setClickedCards([...clickedCards, label]);
+    }
   }
 
+  const showGameStatus = gameStatus !== 'playing';
+  const gameStatusText = gameStatus === 'won' ? 'You won!' : 'Game over';
+
   return (
-    <div style={{ display: 'flex', gap: '10px' }}>
-      {createCardDeck(cardDeck, handleClick)}
-    </div>
+    <>
+      <div style={{ display: 'flex', gap: '10px' }}>
+        {createCardDeck(cardDeck, handleClick)}
+      </div>
+      {showGameStatus && <p>{gameStatusText}</p>}
+    </>
   );
 }
 
