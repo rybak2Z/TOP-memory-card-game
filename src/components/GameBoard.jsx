@@ -27,6 +27,10 @@ function GameBoard() {
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
 
   function handleClick(label) {
+    if (gameStatus !== 'playing') {
+      return;
+    }
+
     const deckCopy = [...cardDeck];
     shuffleArray(deckCopy);
     setCardDeck(deckCopy);
