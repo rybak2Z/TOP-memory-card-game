@@ -35,6 +35,7 @@ function GameBoard() {
       setGameStatus('lost');
     } else if (clickedCards.length + 1 === allCards.length) {
       setGameStatus('won');
+      setClickedCards([...clickedCards, label]);
     } else {
       setClickedCards([...clickedCards, label]);
     }
@@ -45,6 +46,7 @@ function GameBoard() {
 
   return (
     <>
+      <p>Score: {clickedCards.length}</p>
       <div style={{ display: 'flex', gap: '10px' }}>
         {createCardDeck(cardDeck, handleClick)}
       </div>
