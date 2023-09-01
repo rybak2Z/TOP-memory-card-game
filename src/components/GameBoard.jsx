@@ -1,4 +1,5 @@
 import Card from './Card.jsx';
+import GameEndModal from './GameEndModal.jsx';
 import { useState } from 'react';
 
 const allCards = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -45,6 +46,12 @@ function GameBoard() {
     }
   }
 
+  function handleReset() {
+    setCardDeck(allCards);
+    setClickedCards([]);
+    setGameStatus('playing');
+  }
+
   const showGameStatus = gameStatus !== 'playing';
   const gameStatusText = gameStatus === 'won' ? 'You won!' : 'Game over';
 
@@ -54,7 +61,9 @@ function GameBoard() {
       <div style={{ display: 'flex', gap: '10px' }}>
         {createCardDeck(cardDeck, handleClick)}
       </div>
-      {showGameStatus && <p>{gameStatusText}</p>}
+      {showGameStatus && (
+        <GameEndModal gameStatusText={gameStatusText} onReset={handleReset} />
+      )}
     </>
   );
 }
