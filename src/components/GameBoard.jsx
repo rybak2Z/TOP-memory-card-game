@@ -1,8 +1,9 @@
 import Card from './Card.jsx';
+import DifficultySelection from './DifficultySelection.jsx';
 import GameEndModal from './GameEndModal.jsx';
 import { useState } from 'react';
 
-const allCards = ['A', 'B', 'C', 'D', 'E', 'F'];
+const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
 function createCardDeck(cardLabels, clickHandler) {
   const deck = cardLabels.map((cardName) => (
@@ -22,6 +23,12 @@ function shuffleArray(array) {
   return array;
 }
 
+function chooseRandomN(array, n) {
+  const arrayCopy = [...array];
+  shuffleArray(arrayCopy);
+  return arrayCopy.slice(0, n);
+}
+
 function GameBoard() {
   const [cardDeck, setCardDeck] = useState(allCards);
   const [clickedCards, setClickedCards] = useState([]);
@@ -38,12 +45,18 @@ function GameBoard() {
 
     if (clickedCards.includes(label)) {
       setGameStatus('lost');
-    } else if (clickedCards.length + 1 === allCards.length) {
+    } else if (clickedCards.length + 1 === cardDeck.length) {
       setGameStatus('won');
       setClickedCards([...clickedCards, label]);
     } else {
       setClickedCards([...clickedCards, label]);
     }
+  }
+
+  function handleDifficultySelected(numCards) {
+    const cards = chooseRandomN(allCards, numCards);
+    setCardDeck(cards);
+    setClickedCards([]);
   }
 
   function handleReset() {
@@ -57,6 +70,7 @@ function GameBoard() {
 
   return (
     <>
+      <DifficultySelection onDifficultySelected={handleDifficultySelected} />
       <p>Score: {clickedCards.length}</p>
       <div style={{ display: 'flex', gap: '10px' }}>
         {createCardDeck(cardDeck, handleClick)}
