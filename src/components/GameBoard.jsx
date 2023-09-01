@@ -1,6 +1,4 @@
 import Card from './Card.jsx';
-import DifficultySelection from './DifficultySelection.jsx';
-import GameEndModal from './GameEndModal.jsx';
 import { useState } from 'react';
 
 const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -29,13 +27,12 @@ function chooseRandomN(array, n) {
   return arrayCopy.slice(0, n);
 }
 
-function GameBoard() {
-  const [cardDeck, setCardDeck] = useState(allCards);
+function GameBoard({ numCards, onGameFinished, active }) {
+  const [cardDeck, setCardDeck] = useState(chooseRandomN(allCards, numCards));
   const [clickedCards, setClickedCards] = useState([]);
-  const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
 
   function handleClick(label) {
-    if (gameStatus !== 'playing') {
+    if (!active) {
       return;
     }
 
@@ -44,40 +41,22 @@ function GameBoard() {
     setCardDeck(deckCopy);
 
     if (clickedCards.includes(label)) {
-      setGameStatus('lost');
+      onGameFinished(false);
+      setClickedCards([]);
     } else if (clickedCards.length + 1 === cardDeck.length) {
-      setGameStatus('won');
+      onGameFinished(true);
       setClickedCards([...clickedCards, label]);
     } else {
       setClickedCards([...clickedCards, label]);
     }
   }
 
-  function handleDifficultySelected(numCards) {
-    const cards = chooseRandomN(allCards, numCards);
-    setCardDeck(cards);
-    setClickedCards([]);
-  }
-
-  function handleReset() {
-    setCardDeck(allCards);
-    setClickedCards([]);
-    setGameStatus('playing');
-  }
-
-  const showGameStatus = gameStatus !== 'playing';
-  const gameStatusText = gameStatus === 'won' ? 'You won!' : 'Game over';
-
   return (
     <>
-      <DifficultySelection onDifficultySelected={handleDifficultySelected} />
       <p>Score: {clickedCards.length}</p>
       <div style={{ display: 'flex', gap: '10px' }}>
         {createCardDeck(cardDeck, handleClick)}
       </div>
-      {showGameStatus && (
-        <GameEndModal gameStatusText={gameStatusText} onReset={handleReset} />
-      )}
     </>
   );
 }

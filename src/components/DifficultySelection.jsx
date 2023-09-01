@@ -1,9 +1,9 @@
-function DifficultySelection({ onDifficultySelected }) {
+function DifficultySelection({ onSelected }) {
   return (
     <div>
-      <button onClick={() => onDifficultySelected(5)}>Easy</button>
-      <button onClick={() => onDifficultySelected(7)}>Medium</button>
-      <button onClick={() => onDifficultySelected(10)}>Hard</button>
+      <button onClick={() => onSelected('easy')}>Easy</button>
+      <button onClick={() => onSelected('medium')}>Medium</button>
+      <button onClick={() => onSelected('hard')}>Hard</button>
     </div>
   );
 }
