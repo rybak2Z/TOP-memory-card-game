@@ -9,13 +9,16 @@ function App() {
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
   const [score, setScore] = useState(0);
 
-  let numCards;
+  let numCards, numShownCards;
   if (difficulty === 'easy') {
     numCards = 5;
+    numShownCards = 3;
   } else if (difficulty === 'medium') {
     numCards = 7;
+    numShownCards = 4;
   } else if (difficulty === 'hard') {
     numCards = 10;
+    numShownCards = 5;
   }
 
   const showGameStatus = gameStatus !== 'playing';
@@ -42,6 +45,7 @@ function App() {
   const gameBoardElement = (
     <GameBoard
       numCards={numCards}
+      numShownCards={numShownCards}
       score={score}
       onGameFinished={handleGameFinished}
       onScoreIncrease={handleScoreIncrease}

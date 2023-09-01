@@ -3,8 +3,9 @@ import { useState } from 'react';
 
 const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
-function createCardDeck(cardLabels, clickHandler) {
-  const deck = cardLabels.map((cardName) => (
+function createCardDeck(cardLabels, numShownCards, clickHandler) {
+  const shownCards = chooseRandomN(cardLabels, numShownCards);
+  const deck = shownCards.map((cardName) => (
     <Card key={cardName} label={cardName} onClick={clickHandler} />
   ));
   return deck;
@@ -29,6 +30,7 @@ function chooseRandomN(array, n) {
 
 function GameBoard({
   numCards,
+  numShownCards,
   score,
   onGameFinished,
   onScoreIncrease,
@@ -65,7 +67,7 @@ function GameBoard({
         Score: {score} / {numCards}
       </p>
       <div style={{ display: 'flex', gap: '10px' }}>
-        {createCardDeck(cardDeck, handleClick)}
+        {createCardDeck(cardDeck, numShownCards, handleClick)}
       </div>
     </>
   );
