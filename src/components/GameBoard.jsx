@@ -27,7 +27,13 @@ function chooseRandomN(array, n) {
   return arrayCopy.slice(0, n);
 }
 
-function GameBoard({ numCards, onGameFinished, active }) {
+function GameBoard({
+  numCards,
+  score,
+  onGameFinished,
+  onScoreIncrease,
+  active,
+}) {
   const [cardDeck, setCardDeck] = useState(chooseRandomN(allCards, numCards));
   const [clickedCards, setClickedCards] = useState([]);
 
@@ -46,14 +52,18 @@ function GameBoard({ numCards, onGameFinished, active }) {
     } else if (clickedCards.length + 1 === cardDeck.length) {
       onGameFinished(true);
       setClickedCards([...clickedCards, label]);
+      onScoreIncrease();
     } else {
       setClickedCards([...clickedCards, label]);
+      onScoreIncrease();
     }
   }
 
   return (
     <>
-      <p>Score: {clickedCards.length}</p>
+      <p>
+        Score: {score} / {numCards}
+      </p>
       <div style={{ display: 'flex', gap: '10px' }}>
         {createCardDeck(cardDeck, handleClick)}
       </div>

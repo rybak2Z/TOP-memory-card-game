@@ -7,6 +7,7 @@ import './App.css';
 function App() {
   const [difficulty, setDifficulty] = useState(null); // null, 'easy', 'medium', 'hard'
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
+  const [score, setScore] = useState(0);
 
   let numCards;
   if (difficulty === 'easy') {
@@ -19,23 +20,31 @@ function App() {
 
   const showGameStatus = gameStatus !== 'playing';
 
+  function handleScoreIncrease() {
+    setScore(score + 1);
+  }
+
   function handleGameFinished(won) {
     setGameStatus(won ? 'won' : 'lost');
   }
 
   function handleReset() {
     setGameStatus('playing');
+    setScore(0);
   }
 
   function handleGoToMainMenu() {
     setDifficulty(null);
     setGameStatus('playing');
+    setScore(0);
   }
 
   const gameBoardElement = (
     <GameBoard
       numCards={numCards}
+      score={score}
       onGameFinished={handleGameFinished}
+      onScoreIncrease={handleScoreIncrease}
       active={gameStatus === 'playing'}
     />
   );
@@ -43,6 +52,8 @@ function App() {
   const gameEndModalElement = (
     <GameEndModal
       won={gameStatus === 'won'}
+      score={score}
+      maxScore={numCards}
       onReset={handleReset}
       onGoToMainMenu={handleGoToMainMenu}
     />
