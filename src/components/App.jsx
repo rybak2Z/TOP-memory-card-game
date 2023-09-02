@@ -64,10 +64,10 @@ function App() {
   );
 
   return (
-    <>
+    <main>
       {difficulty ? gameBoardElement : diffSelectElement}
       {showGameStatus && gameEndModalElement}
-    </>
+    </main>
   );
 }
 
