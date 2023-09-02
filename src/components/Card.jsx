@@ -1,11 +1,10 @@
-function Card({ label, onClick }) {
+function Card({ label, hide, onClick }) {
+  const activeClass = hide ? 'active' : '';
   return (
-    <button
-      onClick={() => onClick(label)}
-      style={{ width: 100, height: 100, border: '2px solid black' }}
-    >
-      {label}
-    </button>
+    <div className='card'>
+      <div className={'cardCover ' + activeClass}></div>
+      <button onClick={() => onClick(label)}>{label}</button>
+    </div>
   );
 }
 
