@@ -111,14 +111,14 @@ function GameBoard({
   }
 
   function updateCards(newClickedCardsIdxs) {
-      let newShownCardsIdxs = chooseRandomN(cardDeck.keys(), numShownCards);
-      newShownCardsIdxs = ensureContainsUnclickedCard(
-        cardDeck,
-        newShownCardsIdxs,
-        newClickedCardsIdxs,
-      );
-      shuffleArray(newShownCardsIdxs);
-      setShownCardsIdxs(newShownCardsIdxs);
+    let newShownCardsIdxs = chooseRandomN(cardDeck.keys(), numShownCards);
+    newShownCardsIdxs = ensureContainsUnclickedCard(
+      cardDeck,
+      newShownCardsIdxs,
+      newClickedCardsIdxs,
+    );
+    shuffleArray(newShownCardsIdxs);
+    setShownCardsIdxs(newShownCardsIdxs);
   }
 
   function setUnhideCardsTimeout() {

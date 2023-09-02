@@ -1,3 +1,5 @@
+import '../styles/Card.css';
+
 function Card({ cardIdx, label, hide, onClick }) {
   const activeClass = hide ? 'active' : '';
   return (

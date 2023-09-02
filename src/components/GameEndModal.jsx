@@ -1,3 +1,5 @@
+import '../styles/GameEndModal.css';
+
 function GameEndModal({ won, score, maxScore, onReset, onGoToMainMenu }) {
   const gameStatusText = won ? 'You won!' : 'Game over';
 
