@@ -80,6 +80,7 @@ function GameBoard({
   function gameOver() {
     onGameFinished(false);
     setClickedCardsIdxs([]);
+    updateCards([]);
   }
 
   function gameWon() {
@@ -103,6 +104,13 @@ function GameBoard({
 
   function setUpdateCardsTimeout(newClickedCardsIdxs) {
     const timeoutId = setTimeout(() => {
+      updateCards(newClickedCardsIdxs);
+    }, 750);
+
+    return timeoutId;
+  }
+
+  function updateCards(newClickedCardsIdxs) {
       let newShownCardsIdxs = chooseRandomN(cardDeck.keys(), numShownCards);
       newShownCardsIdxs = ensureContainsUnclickedCard(
         cardDeck,
@@ -111,9 +119,6 @@ function GameBoard({
       );
       shuffleArray(newShownCardsIdxs);
       setShownCardsIdxs(newShownCardsIdxs);
-    }, 750);
-
-    return timeoutId;
   }
 
   function setUnhideCardsTimeout() {
