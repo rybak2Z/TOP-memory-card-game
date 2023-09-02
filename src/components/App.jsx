@@ -1,8 +1,8 @@
-import GameBoard from './components/GameBoard.jsx';
-import DifficultySelection from './components/DifficultySelection.jsx';
-import GameEndModal from './components/GameEndModal.jsx';
+import GameBoard from './GameBoard.jsx';
+import DifficultySelection from './DifficultySelection.jsx';
+import GameEndModal from './GameEndModal.jsx';
 import { useState } from 'react';
-import './App.css';
+import '../styles/App.css';
 
 function App() {
   const [difficulty, setDifficulty] = useState(null); // null, 'easy', 'medium', 'hard'
