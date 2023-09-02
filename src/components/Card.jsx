@@ -1,9 +1,9 @@
-function Card({ label, hide, onClick }) {
+function Card({ cardIdx, label, hide, onClick }) {
   const activeClass = hide ? 'active' : '';
   return (
     <div className='card'>
       <div className={'cardCover ' + activeClass}></div>
-      <button onClick={() => onClick(label)}>{label}</button>
+      <button onClick={() => onClick(cardIdx)}>{label}</button>
     </div>
   );
 }

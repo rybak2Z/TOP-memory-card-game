@@ -14,26 +14,32 @@ function createCardDeck(cards, shownCardsIdxs, hideCards, clickHandler) {
   for (const [i, cardIdx] of shownCardsIdxs.entries()) {
     const card = cards[cardIdx];
     shownCards.push(
-      <Card key={i} label={card} hide={hideCards} onClick={clickHandler} />,
+      <Card
+        key={i}
+        cardIdx={cardIdx}
+        label={card}
+        hide={hideCards}
+        onClick={clickHandler}
+      />,
     );
   }
 
   return shownCards;
 }
 
-function ensureContainsUnclickedCard(cards, shownCardsIdxs, clickedCards) {
+function ensureContainsUnclickedCard(cards, shownCardsIdxs, clickedCardsIdxs) {
   // Make sure that there is at least one card that has not been clicked yet
   // to prevent cases where any click would lead to losing the game
-  const shownCards = shownCardsIdxs.map((idx) => cards[idx]);
-  const noClickableCard = shownCards.every((card) =>
-    clickedCards.includes(card),
+  const noClickableCard = shownCardsIdxs.every((cardIdx) =>
+    clickedCardsIdxs.includes(cardIdx),
   );
 
   if (noClickableCard) {
-    const unclickedCards = cards.filter((card) => !clickedCards.includes(card));
-    // console.log("unclicked cards", unclickedCards);
-    const [unclickedCard] = chooseRandomN(unclickedCards, 1);
-    const unclickedCardIdx = cards.indexOf(unclickedCard);
+    const cardsIdxs = [...cards.keys()];
+    const unclickedCardsIdxs = cardsIdxs.filter(
+      (cardIdx) => !clickedCardsIdxs.includes(cardIdx),
+    );
+    const [unclickedCardIdx] = chooseRandomN(unclickedCardsIdxs, 1);
 
     const newShownCardsIdxs = [...shownCardsIdxs];
     newShownCardsIdxs[randomInt(newShownCardsIdxs.length)] = unclickedCardIdx;
@@ -70,30 +76,30 @@ function GameBoard({
   active,
 }) {
   const [cardDeck, setCardDeck] = useState(chooseRandomN(allCards, numCards));
-  const [clickedCards, setClickedCards] = useState([]);
+  const [clickedCardsIdxs, setClickedCardsIdxs] = useState([]);
   const [shownCardsIdxs, setShownCardsIdxs] = useState(
     chooseRandomN(cardDeck.keys(), numShownCards),
   );
   const [hideCards, setHideCards] = useState(false);
   const timeoutIds = useRef([]);
 
-  function handleClick(label) {
+  function handleClick(cardIdx) {
     if (!active) {
       return;
     }
 
-    if (clickedCards.includes(label)) {
+    if (clickedCardsIdxs.includes(cardIdx)) {
       gameOver();
-    } else if (clickedCards.length + 1 === cardDeck.length) {
-      gameWon(label);
+    } else if (clickedCardsIdxs.length + 1 === cardDeck.length) {
+      gameWon(cardIdx);
     } else {
-      nextGameStep(label);
+      nextGameStep(cardIdx);
     }
   }
 
   function gameOver() {
     onGameFinished(false);
-    setClickedCards([]);
+    setClickedCardsIdxs([]);
   }
 
   function gameWon() {
@@ -101,27 +107,27 @@ function GameBoard({
     onScoreIncrease();
   }
 
-  function nextGameStep(newCardClicked) {
-    const newClickedCards = [...clickedCards, newCardClicked];
-    setClickedCards(newClickedCards);
+  function nextGameStep(clickedCardIdx) {
+    const newClickedCardsIdxs = [...clickedCardsIdxs, clickedCardIdx];
+    setClickedCardsIdxs(newClickedCardsIdxs);
     onScoreIncrease();
     setHideCards(true);
-    manageCardHideAnimation(newClickedCards);
+    manageCardHideAnimation(newClickedCardsIdxs);
   }
 
-  function manageCardHideAnimation(newClickedCards) {
-    const timeoutIdUpdateCards = setUpdateCardsTimeout(newClickedCards);
+  function manageCardHideAnimation(newClickedCardsIdxs) {
+    const timeoutIdUpdateCards = setUpdateCardsTimeout(newClickedCardsIdxs);
     const timeoutIdUnhideCards = setUnhideCardsTimeout();
     timeoutIds.current.push(timeoutIdUpdateCards, timeoutIdUnhideCards);
   }
 
-  function setUpdateCardsTimeout(newClickedCards) {
+  function setUpdateCardsTimeout(newClickedCardsIdxs) {
     const timeoutId = setTimeout(() => {
       let newShownCardsIdxs = chooseRandomN(cardDeck.keys(), numShownCards);
       newShownCardsIdxs = ensureContainsUnclickedCard(
         cardDeck,
         newShownCardsIdxs,
-        newClickedCards,
+        newClickedCardsIdxs,
       );
       shuffleArray(newShownCardsIdxs);
       setShownCardsIdxs(newShownCardsIdxs);
