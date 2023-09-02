@@ -1,0 +1,28 @@
+.diff-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.diff-selection button {
+  font-family: 'Nunito', sans-serif;
+  font-size: 2rem;
+  color: white;
+  background-color: rgba(0 0 0 / 0.3);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0 0 0 / 0.3);
+}
+
+.diff-selection button div {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 2rem;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.diff-selection button div:hover {
+  transform: scale(1.2);
+}
