@@ -5,19 +5,43 @@ import { useEffect } from 'react';
 
 const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
-function createCardDeck(cardLabels, numShownCards, hideCards, clickHandler) {
-  const shownCards = cardLabels.slice(0, numShownCards);
-  const deck = shownCards.map((cardName, idx) => {
-    return (
-      <Card
-        key={idx}
-        label={cardName}
-        hide={hideCards}
-        onClick={clickHandler}
-      />
+function randomInt(range) {
+  return Math.floor(Math.random() * range);
+}
+
+function createCardDeck(cards, shownCardsIdxs, hideCards, clickHandler) {
+  const shownCards = [];
+  for (const [i, cardIdx] of shownCardsIdxs.entries()) {
+    const card = cards[cardIdx];
+    shownCards.push(
+      <Card key={i} label={card} hide={hideCards} onClick={clickHandler} />,
     );
-  });
-  return deck;
+  }
+
+  return shownCards;
+}
+
+function ensureContainsUnclickedCard(cards, shownCardsIdxs, clickedCards) {
+  // Make sure that there is at least one card that has not been clicked yet
+  // to prevent cases where any click would lead to losing the game
+  const shownCards = shownCardsIdxs.map((idx) => cards[idx]);
+  const noClickableCard = shownCards.every((card) =>
+    clickedCards.includes(card),
+  );
+
+  if (noClickableCard) {
+    const unclickedCards = cards.filter((card) => !clickedCards.includes(card));
+    // console.log("unclicked cards", unclickedCards);
+    const [unclickedCard] = chooseRandomN(unclickedCards, 1);
+    const unclickedCardIdx = cards.indexOf(unclickedCard);
+
+    const newShownCardsIdxs = [...shownCardsIdxs];
+    newShownCardsIdxs[randomInt(newShownCardsIdxs.length)] = unclickedCardIdx;
+
+    return newShownCardsIdxs;
+  }
+
+  return shownCardsIdxs;
 }
 
 function shuffleArray(array) {
@@ -47,6 +71,9 @@ function GameBoard({
 }) {
   const [cardDeck, setCardDeck] = useState(chooseRandomN(allCards, numCards));
   const [clickedCards, setClickedCards] = useState([]);
+  const [shownCardsIdxs, setShownCardsIdxs] = useState(
+    chooseRandomN(cardDeck.keys(), numShownCards),
+  );
   const [hideCards, setHideCards] = useState(false);
   const timeoutIds = useRef([]);
 
@@ -69,30 +96,35 @@ function GameBoard({
     setClickedCards([]);
   }
 
-  function gameWon(newCardClicked) {
+  function gameWon() {
     onGameFinished(true);
-    setClickedCards([...clickedCards, newCardClicked]);
     onScoreIncrease();
   }
 
   function nextGameStep(newCardClicked) {
-    setClickedCards([...clickedCards, newCardClicked]);
+    const newClickedCards = [...clickedCards, newCardClicked];
+    setClickedCards(newClickedCards);
     onScoreIncrease();
     setHideCards(true);
-    manageCardHideAnimation();
+    manageCardHideAnimation(newClickedCards);
   }
 
-  function manageCardHideAnimation() {
-    const timeoutIdUpdateCards = setUpdateCardsTimeout();
+  function manageCardHideAnimation(newClickedCards) {
+    const timeoutIdUpdateCards = setUpdateCardsTimeout(newClickedCards);
     const timeoutIdUnhideCards = setUnhideCardsTimeout();
     timeoutIds.current.push(timeoutIdUpdateCards, timeoutIdUnhideCards);
   }
 
-  function setUpdateCardsTimeout() {
+  function setUpdateCardsTimeout(newClickedCards) {
     const timeoutId = setTimeout(() => {
-      const deckCopy = [...cardDeck];
-      shuffleArray(deckCopy);
-      setCardDeck(deckCopy);
+      let newShownCardsIdxs = chooseRandomN(cardDeck.keys(), numShownCards);
+      newShownCardsIdxs = ensureContainsUnclickedCard(
+        cardDeck,
+        newShownCardsIdxs,
+        newClickedCards,
+      );
+      shuffleArray(newShownCardsIdxs);
+      setShownCardsIdxs(newShownCardsIdxs);
     }, 750);
 
     return timeoutId;
@@ -121,7 +153,7 @@ function GameBoard({
         Score: {score} / {numCards}
       </p>
       <div style={{ display: 'flex', gap: '10px' }}>
-        {createCardDeck(cardDeck, numShownCards, hideCards, handleClick)}
+        {createCardDeck(cardDeck, shownCardsIdxs, hideCards, handleClick)}
       </div>
     </>
   );
