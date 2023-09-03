@@ -19,6 +19,7 @@
 }
 
 .card.flip {
+  pointer-events: none;
   animation-name: flip-card;
   animation-duration: 1500ms;
   animation-iteration-count: 1;
