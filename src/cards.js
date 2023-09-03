@@ -55,12 +55,16 @@ export default [
     image: imageBlueDomesOfOia,
   },
   { name: 'Ha Long Bay', location: 'Ha Long, Vietnam', image: imageHaLongBay },
-  { name: 'Petra', location: 'Jordan', image: imagePetra },
-  { name: 'The Grand Palace', location: 'Bangkok', image: imageTheGrandPalace },
-  { name: 'Blue Mosque', location: 'Istanbul', image: imageBlueMosque },
+  { name: 'Petra', location: "Ma'an Governorate, Jordan", image: imagePetra },
+  {
+    name: 'The Grand Palace',
+    location: 'Bangkok, Thailand',
+    image: imageTheGrandPalace,
+  },
+  { name: 'Blue Mosque', location: 'Istanbul, Turkey', image: imageBlueMosque },
   {
     name: 'Christ the Redeemer',
-    location: 'Rio de Janeiro',
+    location: 'Rio de Janeiro, Brazil',
     image: imageChristTheRedeemer,
   },
   {
@@ -74,7 +78,11 @@ export default [
     image: imageGiantsCauseway,
   },
   { name: 'Easter Islands', location: 'Chile', image: imageEasterIslands },
-  { name: 'Machu Picchu', location: 'Peru', image: imageMachuPicchu },
+  {
+    name: 'Machu Picchu',
+    location: 'Cusco Region, Peru',
+    image: imageMachuPicchu,
+  },
   {
     name: 'Angkor Wat',
     location: 'Siem Reap, Cambodia',
