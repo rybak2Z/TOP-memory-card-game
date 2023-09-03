@@ -3,6 +3,7 @@ import { randomInt, shuffleArray, chooseRandomN } from '../utils.js';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import '../styles/GameBoard.css';
 
 const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
@@ -139,14 +140,16 @@ function GameBoard({
   }, [hideCards]);
 
   return (
-    <>
+    <div className='game-board'>
       <p>
-        Score: {score} / {numCards}
+        <span>
+          Score: {score} / {numCards}
+        </span>
       </p>
       <div style={{ display: 'flex', gap: '10px' }}>
         {createCardDeck(cardDeck, shownCardsIdxs, hideCards, handleClick)}
       </div>
-    </>
+    </div>
   );
 }
 
