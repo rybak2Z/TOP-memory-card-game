@@ -10,7 +10,7 @@ import imageMountFuji from './images/mount-fuji.webp';
 import imageBlueDomesOfOia from './images/blue-domes-of-oia.webp';
 import imageHaLongBay from './images/ha-long-bay.webp';
 import imagePetra from './images/petra.webp';
-import imageTheGrandPalace from './images/the-grand-palace.webp';
+import imageGrandPalace from './images/grand-palace.webp';
 import imageBlueMosque from './images/blue-mosque.webp';
 import imageChristTheRedeemer from './images/christ-the-redeemer.webp';
 import imageLaSagradaFamilia from './images/la-sagrada-familia.webp';
@@ -57,9 +57,9 @@ export default [
   { name: 'Ha Long Bay', location: 'Ha Long, Vietnam', image: imageHaLongBay },
   { name: 'Petra', location: "Ma'an Governorate, Jordan", image: imagePetra },
   {
-    name: 'The Grand Palace',
+    name: 'Grand Palace',
     location: 'Bangkok, Thailand',
-    image: imageTheGrandPalace,
+    image: imageGrandPalace,
   },
   { name: 'Blue Mosque', location: 'Istanbul, Turkey', image: imageBlueMosque },
   {
