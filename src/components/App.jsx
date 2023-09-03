@@ -65,6 +65,12 @@ function App() {
 
   return (
     <main>
+      {!difficulty && (
+        <>
+          <h1>Landmark Memory Game</h1>
+          <h2>Try to click on every landmark without clicking any twice</h2>
+        </>
+      )}
       {difficulty ? gameBoardElement : diffSelectElement}
       {showGameStatus && gameEndModalElement}
     </main>

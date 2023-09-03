@@ -1,6 +1,29 @@
 main {
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: 'Nunito', sans-serif;
+}
+
+main > h1 {
+  width: 40%;
+  font-size: 3rem;
+  text-align: center;
+  text-wrap: balance;
+  background: -webkit-linear-gradient(
+    left,
+    hsl(218, 100%, 46%),
+    hsl(218, 100%, 74%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+main > h2 {
+  width: 40%;
+  margin: 0;
+  text-wrap: balance;
 }
