@@ -1,11 +1,10 @@
+import allCards from '../cards.js';
 import Card from './Card.jsx';
 import { randomInt, shuffleArray, chooseRandomN } from '../utils.js';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import '../styles/GameBoard.css';
-
-const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
 function createCardDeck(cards, shownCardsIdxs, flipCards, clickHandler) {
   const shownCards = [];
@@ -15,7 +14,9 @@ function createCardDeck(cards, shownCardsIdxs, flipCards, clickHandler) {
       <Card
         key={i}
         cardIdx={cardIdx}
-        label={card}
+        name={card.name}
+        location={card.location}
+        image={card.image}
         flip={flipCards}
         onClick={clickHandler}
       />,

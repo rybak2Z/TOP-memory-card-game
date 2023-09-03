@@ -1,14 +1,13 @@
 import '../styles/Card.css';
-import placeHolderImage from '../images/placeholder.webp';
 
-function Card({ cardIdx, label, flip, onClick }) {
+function Card({ cardIdx, name, location, image, flip, onClick }) {
   const flipClass = flip ? 'flip' : '';
   return (
     <button onClick={() => onClick(cardIdx)} className={'card ' + flipClass}>
-      <img src={placeHolderImage} />
+      <img src={image} />
       <div className='card-label'>
-        <h1>{label}</h1>
-        <h2>Location</h2>
+        <h1>{name}</h1>
+        <h2>{location}</h2>
       </div>
     </button>
   );
