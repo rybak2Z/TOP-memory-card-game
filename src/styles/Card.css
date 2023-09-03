@@ -1,14 +1,64 @@
 .card {
   position: relative;
-  width: 100px;
-  height: 100px;
-  border: '2px solid black';
+  width: 200px;
+  height: 300px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: border-color, box-shadow;
+  transition-duration: 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(255 255 255 / 0.3);
+  box-shadow: 0px 0px 10px black;
 }
 
 .card button {
   display: inline-block;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: none;
+  background-color: rgba(0 0 0 / 0.3);
+}
+
+.card button > * {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.card button img {
+  padding-bottom: 0;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+.card-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding-top: 0;
+  height: 20%;
+}
+
+.card-label h1 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.card-label h2 {
+  font-size: 0.7rem;
+  margin: 0;
+  margin-top: 0.2rem;
+  font-style: italic;
 }
 
 .cardCover {
