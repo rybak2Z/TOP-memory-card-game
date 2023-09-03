@@ -7,7 +7,7 @@ import '../styles/GameBoard.css';
 
 const allCards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
-function createCardDeck(cards, shownCardsIdxs, hideCards, clickHandler) {
+function createCardDeck(cards, shownCardsIdxs, flipCards, clickHandler) {
   const shownCards = [];
   for (const [i, cardIdx] of shownCardsIdxs.entries()) {
     const card = cards[cardIdx];
@@ -16,7 +16,7 @@ function createCardDeck(cards, shownCardsIdxs, hideCards, clickHandler) {
         key={i}
         cardIdx={cardIdx}
         label={card}
-        hide={hideCards}
+        flip={flipCards}
         onClick={clickHandler}
       />,
     );
@@ -61,7 +61,7 @@ function GameBoard({
   const [shownCardsIdxs, setShownCardsIdxs] = useState(
     chooseRandomN(cardDeck.keys(), numShownCards),
   );
-  const [hideCards, setHideCards] = useState(false);
+  const [flipCards, setFlipCards] = useState(false);
   const timeoutIds = useRef([]);
 
   function handleClick(cardIdx) {
@@ -93,14 +93,14 @@ function GameBoard({
     const newClickedCardsIdxs = [...clickedCardsIdxs, clickedCardIdx];
     setClickedCardsIdxs(newClickedCardsIdxs);
     onScoreIncrease();
-    setHideCards(true);
-    manageCardHideAnimation(newClickedCardsIdxs);
+    setFlipCards(true);
+    manageCardFlipAnimation(newClickedCardsIdxs);
   }
 
-  function manageCardHideAnimation(newClickedCardsIdxs) {
+  function manageCardFlipAnimation(newClickedCardsIdxs) {
     const timeoutIdUpdateCards = setUpdateCardsTimeout(newClickedCardsIdxs);
-    const timeoutIdUnhideCards = setUnhideCardsTimeout();
-    timeoutIds.current.push(timeoutIdUpdateCards, timeoutIdUnhideCards);
+    const timeoutIdUnflipCards = setUnflipCardsTimeout();
+    timeoutIds.current.push(timeoutIdUpdateCards, timeoutIdUnflipCards);
   }
 
   function setUpdateCardsTimeout(newClickedCardsIdxs) {
@@ -122,22 +122,22 @@ function GameBoard({
     setShownCardsIdxs(newShownCardsIdxs);
   }
 
-  function setUnhideCardsTimeout() {
+  function setUnflipCardsTimeout() {
     const timeoutId = setTimeout(() => {
-      setHideCards(false);
+      setFlipCards(false);
     }, 1500);
 
     return timeoutId;
   }
 
   useEffect(() => {
-    if (!hideCards) {
+    if (!flipCards) {
       while (timeoutIds.current.length > 0) {
         const id = timeoutIds.current.pop();
         clearTimeout(id);
       }
     }
-  }, [hideCards]);
+  }, [flipCards]);
 
   return (
     <div className='game-board'>
@@ -147,7 +147,7 @@ function GameBoard({
         </span>
       </p>
       <div style={{ display: 'flex', gap: '10px' }}>
-        {createCardDeck(cardDeck, shownCardsIdxs, hideCards, handleClick)}
+        {createCardDeck(cardDeck, shownCardsIdxs, flipCards, handleClick)}
       </div>
     </div>
   );
