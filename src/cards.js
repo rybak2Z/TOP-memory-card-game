@@ -15,7 +15,7 @@ import imageBlueMosque from './images/blue-mosque.webp';
 import imageChristTheRedeemer from './images/christ-the-redeemer.webp';
 import imageLaSagradaFamilia from './images/la-sagrada-familia.webp';
 import imageGiantsCauseway from './images/giants-causeway.webp';
-import imageEasterIslands from './images/easter-islands.webp';
+import imageEasterIsland from './images/easter-island.webp';
 import imageMachuPicchu from './images/machu-picchu.webp';
 import imageAngkorWat from './images/angkor-wat.webp';
 
@@ -77,7 +77,7 @@ export default [
     location: 'Antrim, Northern Ireland',
     image: imageGiantsCauseway,
   },
-  { name: 'Easter Islands', location: 'Chile', image: imageEasterIslands },
+  { name: 'Easter Island', location: 'Chile', image: imageEasterIsland },
   {
     name: 'Machu Picchu',
     location: 'Cusco Region, Peru',
