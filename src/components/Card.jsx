@@ -4,8 +4,7 @@ import placeHolderImage from '../images/placeholder.webp';
 function Card({ cardIdx, label, hide, onClick }) {
   const activeClass = hide ? 'active' : '';
   return (
-    <div className='card'>
-      <div className={'cardCover ' + activeClass}></div>
+    <div className={'card ' + activeClass}>
       <button onClick={() => onClick(cardIdx)}>
         <img src={placeHolderImage} />
         <div className='card-label'>
