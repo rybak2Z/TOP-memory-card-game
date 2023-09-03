@@ -1,4 +1,6 @@
 .card {
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: 200px;
   height: 300px;
@@ -7,6 +9,8 @@
   overflow: hidden;
   transition: border-color, box-shadow;
   transition-duration: 0.2s;
+  padding: none;
+  background-color: rgba(0 0 0 / 0.3);
 }
 
 .card:hover {
@@ -14,7 +18,7 @@
   box-shadow: 0px 0px 10px black;
 }
 
-.card.active {
+.card.flip {
   animation-name: flip-card;
   animation-duration: 1500ms;
   animation-iteration-count: 1;
@@ -33,7 +37,7 @@
   }
 }
 
-.card.active button * {
+.card.flip * {
   animation-name: hide;
   animation-duration: 1500ms;
   animation-iteration-count: 1;
@@ -49,24 +53,24 @@
   }
 }
 
-.card button {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  border: none;
-  padding: none;
-  background-color: rgba(0 0 0 / 0.3);
-}
+/* .card button { */
+/*   display: inline-block; */
+/*   width: 100%; */
+/*   height: 100%; */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   border: none; */
+/*   padding: none; */
+/*   background-color: rgba(0 0 0 / 0.3); */
+/* } */
 
-.card button > * {
+.card > * {
   box-sizing: border-box;
   width: 100%;
   padding: 0.5rem;
 }
 
-.card button img {
+.card img {
   padding-bottom: 0;
   height: 80%;
   object-fit: cover;
