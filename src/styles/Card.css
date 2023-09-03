@@ -61,7 +61,6 @@
 }
 
 .card img {
-  padding-bottom: 0;
   height: 80%;
   object-fit: cover;
   border-radius: 13px;
