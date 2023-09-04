@@ -147,7 +147,7 @@ function GameBoard({
           Score: {score} / {numCards}
         </span>
       </p>
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <div className='cards'>
         {createCardDeck(cardDeck, shownCardsIdxs, flipCards, handleClick)}
       </div>
     </div>

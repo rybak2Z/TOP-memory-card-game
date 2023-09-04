@@ -1,9 +1,9 @@
 .card {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   position: relative;
-  width: 200px;
-  height: 300px;
+  max-width: min(12rem, calc(25% + 4vmax));
+  aspect-ratio: 2 / 3;
   border: 1px solid transparent;
   border-radius: 5px;
   overflow: hidden;
@@ -75,16 +75,17 @@
   color: white;
   padding-top: 0;
   height: 20%;
+  font-size: min(1rem, calc(0.7rem + 1vmin));
 }
 
 .card-label h1 {
-  font-size: 1rem;
+  font-size: 1em;
   margin: 0;
 }
 
 .card-label h2 {
-  font-size: 0.7rem;
+  font-size: 0.7em;
   margin: 0;
-  margin-top: 0.2rem;
+  margin-top: 0.2em;
   font-style: italic;
 }

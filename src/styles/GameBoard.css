@@ -1,3 +1,8 @@
+.game-board,
+.cards {
+  width: 100%;
+}
+
 .game-board p {
   font-size: 1.8rem;
   color: black;
@@ -9,4 +14,13 @@
   padding: 0.5rem 1.5rem;
   border-top: 3px solid rgba(0 0 0 / 0.3);
   border-bottom: 3px solid rgba(0 0 0 / 0.3);
+}
+
+.cards {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem;
 }
